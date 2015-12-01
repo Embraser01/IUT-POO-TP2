@@ -29,10 +29,12 @@ public class MainFrame extends JFrame {
         this.view_list = new ListFrame(promotion.getListeEtudiants());
         this.view_dpt = new DptFrame(promotion.getListeEtudiants());
         this.view_bac = new BacFrame(promotion.getListeEtudiants());
+        this.view_form = new FormFrame(promotion.getListeEtudiants());
 
         this.add(this.view_list);
-        //this.add(this.view_dpt);
+        this.add(this.view_dpt);
         this.add(this.view_bac);
+        this.add(this.view_form);
         this.pack();
     }
 }

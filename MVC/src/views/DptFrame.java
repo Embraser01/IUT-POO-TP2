@@ -15,12 +15,13 @@ import java.util.ArrayList;
 /**
  * Created by Marc-Antoine on 01/12/2015.
  */
-public class DptFrame extends JInternalFrame {
+public class DptFrame extends JInternalFrame implements Observateur{
 
     private ArrayList<Etudiant> dataList;
     private DptChart chart;
 
     public DptFrame(ArrayList<Etudiant> dataList) {
+        super("Départements");
         this.dataList = dataList;
 
         chart = new DptChart();
@@ -28,6 +29,11 @@ public class DptFrame extends JInternalFrame {
 
         this.setVisible(true);
         this.pack();
+    }
+
+    @Override
+    public void onUpdate() {
+        chart = new DptChart();
     }
 
 

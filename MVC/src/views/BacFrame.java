@@ -7,28 +7,24 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer3D;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.DatasetUtilities;
-import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.data.general.PieDataset;
-import org.jfree.util.Rotation;
 
 import javax.swing.*;
 import java.util.ArrayList;
 
 /**
- * Created by Marc-Antoine on 01/12/2015.
+ *
  */
-public class BacFrame extends JInternalFrame {
+public class BacFrame extends JInternalFrame implements Observateur {
 
     private ArrayList<Etudiant> dataList;
     private BacChart chart;
 
     public BacFrame(ArrayList<Etudiant> dataList) {
+        super("Filières");
         this.dataList = dataList;
 
         chart = new BacChart();
@@ -36,6 +32,11 @@ public class BacFrame extends JInternalFrame {
 
         this.setVisible(true);
         this.pack();
+    }
+
+    @Override
+    public void onUpdate() {
+        chart = new BacChart();
     }
 
 
@@ -61,7 +62,7 @@ public class BacFrame extends JInternalFrame {
             final DefaultCategoryDataset dataset=new DefaultCategoryDataset();
             tmp = new ArrayList<>();
 
-            /* Get list of bacs */
+            /* Get list of series */
 
             for (Etudiant aTmp : dataList) {
                 if(!tmp.contains(aTmp.getSerieBac()))
