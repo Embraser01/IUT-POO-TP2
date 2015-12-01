@@ -1,4 +1,4 @@
-package views.form;
+package views;
 
 import javax.swing.*;
 

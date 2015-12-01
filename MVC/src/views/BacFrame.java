@@ -1,4 +1,4 @@
-package views.bac;
+package views;
 
 import javax.swing.*;
 
