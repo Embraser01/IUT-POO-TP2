@@ -33,6 +33,7 @@ public class MainFrame extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(new GridBagLayout());
         this.cont = new GridBagConstraints();
+        this.cont.anchor = GridBagConstraints.NORTHWEST;
 
         this.view_list = new ListFrame(promotion.getListeEtudiants(), new DelFromListe(promotion));
         this.view_dpt = new DptFrame(promotion.getListeEtudiants());
@@ -51,12 +52,13 @@ public class MainFrame extends JFrame {
         cont.gridheight = 1;
         cont.gridx = 1;
         cont.gridy = 1;
-        this.add(this.view_dpt, cont);
-
-        cont.gridx = 0;
         this.add(this.view_bac, cont);
 
+        cont.gridx = 0;
+        this.add(this.view_dpt, cont);
+
         cont.gridy = 0;
+        cont.gridwidth = 2;
         this.add(this.view_form, cont);
         this.pack();
     }

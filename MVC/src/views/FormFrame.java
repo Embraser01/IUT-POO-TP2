@@ -52,17 +52,17 @@ public class FormFrame extends JInternalFrame implements ActionListener{
 
         this.addEtu = new JLabel("Ajouter un étudiant");
         this.delEtu = new JLabel("Supprimer un étudiant");
-        this.numAdd = new JLabel("Numéro");
-        this.numDel = new JLabel("Numéro");
-        this.prenom = new JLabel("Prénom");
-        this.nom = new JLabel("Nom");
-        this.bac = new JLabel("Bac");
-        this.dpt = new JLabel("Dpt");
+        this.numAdd = new JLabel("Numéro : ");
+        this.numDel = new JLabel("Numéro : ");
+        this.prenom = new JLabel("Prénom : ");
+        this.nom = new JLabel("Nom : ");
+        this.bac = new JLabel("Bac : ");
+        this.dpt = new JLabel("Dpt : ");
 
-        this.numAddEdit = new JTextField(5);
-        this.numDelEdit = new JTextField(5);
-        this.prenomEdit = new JTextField(5);
-        this.nomEdit = new JTextField(5);
+        this.numAddEdit = new JTextField(10);
+        this.numDelEdit = new JTextField(10);
+        this.prenomEdit = new JTextField(10);
+        this.nomEdit = new JTextField(10);
 
         this.bacCombo = new JComboBox(new String[]{"S", "ES", "STI", "Autre", "Etranger"});
 
