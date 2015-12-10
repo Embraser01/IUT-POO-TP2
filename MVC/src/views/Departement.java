@@ -141,7 +141,7 @@ public enum Departement {
         ArrayList<String> list = new ArrayList<>();
         for (Departement value : Departement.values()) {
             String elem = format;
-            elem = elem.replace(DEPARTMENT_NUMERO, value.getDepartment().toString());
+            elem = elem.replace(DEPARTMENT_NUMERO, String.format("%02d", value.getDepartment()));
             elem = elem.replace(DEPARTMENT_NAME, value.getDepartmentName());
             elem = elem.replace(AREA_NAME, value.getArea());
             elem = elem.replace(PREFECTURE, value.getPrefecture());
