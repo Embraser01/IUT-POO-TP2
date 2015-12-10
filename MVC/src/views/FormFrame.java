@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by Marc-Antoine on 01/12/2015.
  */
-public class FormFrame extends JInternalFrame implements ActionListener{
+public class FormFrame extends JInternalFrame implements ActionListener {
 
     private JPanel pano;
     private GridBagConstraints cont;
@@ -38,6 +38,8 @@ public class FormFrame extends JInternalFrame implements ActionListener{
     private JButton addBtn;
     private JButton delBtn;
 
+    private JSeparator separator;
+
     private AddController addController;
     private DelFromForm delFromForm;
 
@@ -50,6 +52,10 @@ public class FormFrame extends JInternalFrame implements ActionListener{
         this.addController = addController;
         this.delFromForm = delFromForm;
 
+        initPanel();
+    }
+
+    private void initPanel() {
         this.addEtu = new JLabel("Ajouter un étudiant");
         this.delEtu = new JLabel("Supprimer un étudiant");
         this.numAdd = new JLabel("Numéro : ");
@@ -59,6 +65,8 @@ public class FormFrame extends JInternalFrame implements ActionListener{
         this.bac = new JLabel("Bac : ");
         this.dpt = new JLabel("Dpt : ");
 
+        this.separator = new JSeparator();
+
         this.numAddEdit = new JTextField(10);
         this.numDelEdit = new JTextField(10);
         this.prenomEdit = new JTextField(10);
@@ -66,26 +74,30 @@ public class FormFrame extends JInternalFrame implements ActionListener{
 
         this.bacCombo = new JComboBox(new String[]{"S", "ES", "STI", "Autre", "Etranger"});
 
-        ArrayList<String> tmp = new ArrayList<>();
-        for (int i = 1; i <= 95; i++) tmp.add(Integer.toString(i));
-        this.dptCombo = new JComboBox(tmp.toArray());
+        this.dptCombo = new JComboBox(Departement.getList(
+                Departement.DEPARTMENT_NUMERO
+                        + " - "
+                        + Departement.DEPARTMENT_NAME
+                , true).toArray());
 
         this.addBtn = new JButton("Ajouter");
         this.delBtn = new JButton("Supprimer");
 
+
+        cont.anchor = GridBagConstraints.WEST;
         cont.gridy = 0;
         cont.gridx = 0;
         cont.gridwidth = 2;
         this.pano.add(this.addEtu, cont);
 
-        cont.gridy = 3;
+        cont.gridy = 4;
         this.pano.add(this.delEtu, cont);
 
         cont.gridwidth = 1;
         cont.gridy = 1;
         this.pano.add(this.numAdd, cont);
 
-        cont.gridy = 4;
+        cont.gridy = 5;
         this.pano.add(this.numDel, cont);
 
         cont.gridy = 1;
@@ -104,7 +116,7 @@ public class FormFrame extends JInternalFrame implements ActionListener{
         cont.gridx = 1;
         this.pano.add(this.numAddEdit, cont);
 
-        cont.gridy = 4;
+        cont.gridy = 5;
         this.pano.add(this.numDelEdit, cont);
 
         cont.gridy = 1;
@@ -124,8 +136,13 @@ public class FormFrame extends JInternalFrame implements ActionListener{
         cont.gridy = 2;
         this.pano.add(this.addBtn, cont);
 
-        cont.gridy = 5;
+        cont.gridy = 6;
         this.pano.add(this.delBtn, cont);
+
+        cont.gridy = 3;
+        cont.gridx = 0;
+        cont.gridwidth = 11;
+        this.pano.add(this.separator, cont);
 
         this.addBtn.addActionListener(this);
         this.delBtn.addActionListener(this);
@@ -137,13 +154,13 @@ public class FormFrame extends JInternalFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == this.addBtn){
+        if (e.getSource() == this.addBtn) {
             this.addController.addEtu(numAddEdit.getText(),
                     nomEdit.getText(),
                     prenomEdit.getText(),
-                    (String) bacCombo.getSelectedItem(),
-                    (String) dptCombo.getSelectedItem());
-        } else if (e.getSource() == this.delBtn){
+                    ((String) bacCombo.getSelectedItem()),
+                    ((String) dptCombo.getSelectedItem()).replaceAll(" .*", ""));
+        } else if (e.getSource() == this.delBtn) {
             this.delFromForm.delEtu(numDelEdit.getText());
         }
     }
