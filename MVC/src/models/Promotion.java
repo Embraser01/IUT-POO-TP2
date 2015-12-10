@@ -11,33 +11,60 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
- *
+ * Contient une liste d'étudiant
+ * @see Etudiant
  */
+
 public class Promotion implements Observable {
 
+    /**
+     * Liste des étudiants de la promo
+     */
     private ArrayList<Etudiant> list;
 
+    /**
+     * Liste des observateurs de la promo
+     */
     private ArrayList<Observateur> observateurs = null;
 
-
+    /**
+     * Constructeur de la promotion (initialise une liste d' étudiant)
+     */
     public Promotion() {
         list = new ArrayList<Etudiant>();
     }
 
+    /**
+     *  Ajoute un étudiant de la promotion
+     * @param etu Etudiant
+     */
     public void addEtudiant(Etudiant etu) {
         list.add(etu);
         notifyObservateurs();
     }
 
+    /**
+     * Supprime un étudiant de la promotion
+     * @param etu Etudiant
+     */
     public void removeEtudiant(Etudiant etu) {
         list.remove(etu);
         notifyObservateurs();
     }
 
+    /**
+     * Renvoie la promo
+     * @return Liste d'étudiant
+     */
     public ArrayList<Etudiant> getListeEtudiants() {
         return list;
     }
 
+    /**
+     * Recherche dans la promo l'étudiant ayant le numéro id
+     * @param id Numéro étudiant
+     * @return Etudiant
+     */
     public Etudiant searchEtudiant(String id) {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i).getId().compareTo(id) == 0) {
@@ -47,6 +74,10 @@ public class Promotion implements Observable {
         return null;
     }
 
+    /**
+     * Récupère le nombre d'étudiant par type de bac
+     * @return Tableau de int
+     */
     public int[] seriesbacs() {
         int[] tab = new int[6];
         for (int i = 0; i < tab.length; i++)
@@ -68,6 +99,9 @@ public class Promotion implements Observable {
         return tab;
     }
 
+    /**
+     * Demande un fichier CSV à l'utilisateur et initialise la promo avec
+     */
     public void loadFileCSV() {
         String ligne, idt, nom, prenom, dept, bac;
         try {
