@@ -1,6 +1,7 @@
 package views;
 
 import models.Etudiant;
+import models.Promotion;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 /**
  *
  */
-public class BacFrame extends JInternalFrame implements Observateur {
+public class BacFrame extends JInternalFrame {
 
     private ArrayList<Etudiant> dataList;
     private BacChart chart;
@@ -34,15 +35,15 @@ public class BacFrame extends JInternalFrame implements Observateur {
         this.pack();
     }
 
-    @Override
-    public void onUpdate() {
-        chart = new BacChart();
+    public void setObservable(Promotion promotion){
+        promotion.addObservateur(chart);
     }
 
-
-    private class BacChart extends JPanel {
+    private class BacChart extends JPanel implements Observateur {
 
         private ArrayList<String> tmp;
+
+        private final ChartPanel chartPanel;
 
         public BacChart() {
 
@@ -52,8 +53,8 @@ public class BacFrame extends JInternalFrame implements Observateur {
             final JFreeChart chart = createCategoryChart(dataset, title, "Bacs", "Nombre", PlotOrientation.VERTICAL);
 
             // add the chart to a panel...
-            final ChartPanel chartPanel = new ChartPanel(chart);
-            chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
+            chartPanel = new ChartPanel(chart);
+            chartPanel.setPreferredSize(new java.awt.Dimension(400, 270));
             this.add(chartPanel);
         }
 
@@ -106,6 +107,16 @@ public class BacFrame extends JInternalFrame implements Observateur {
             renderer.setDrawBarOutline(false);
 
             return chart;
+        }
+
+        @Override
+        public void onUpdate() {
+            final CategoryDataset dataset = createDataset();
+
+            // create the chart...
+            final JFreeChart chart = createCategoryChart(dataset, title, "Bacs", "Nombre", PlotOrientation.VERTICAL);
+
+            chartPanel.setChart(chart);
         }
     }
 }

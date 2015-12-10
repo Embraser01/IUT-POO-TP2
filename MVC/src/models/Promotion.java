@@ -1,18 +1,24 @@
 package models;
 
+import views.Observateur;
+
 import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
  *
  */
-public class Promotion {
+public class Promotion implements Observable {
 
     private ArrayList<Etudiant> list;
+
+    private ArrayList<Observateur> observateurs = null;
+
 
     public Promotion() {
         list = new ArrayList<Etudiant>();
@@ -20,10 +26,12 @@ public class Promotion {
 
     public void addEtudiant(Etudiant etu) {
         list.add(etu);
+        notifyObservateurs();
     }
 
     public void removeEtudiant(Etudiant etu) {
         list.remove(etu);
+        notifyObservateurs();
     }
 
     public ArrayList<Etudiant> getListeEtudiants() {
@@ -79,7 +87,27 @@ public class Promotion {
                 input.close();
             }
         } catch (Exception exception) {
-            System.out.println("Probleme import csv");
+            System.out.println("Probleme import csv : ");
         }
+    }
+
+    @Override
+    public void addObservateur(Observateur observateur) {
+
+        if (observateurs == null) observateurs = new ArrayList<>();
+
+        if (!observateurs.contains(observateur)) observateurs.add(observateur);
+    }
+
+    @Override
+    public boolean removeObservateur(Observateur observateur) {
+        if (observateurs != null) return observateurs.remove(observateur);
+        return false;
+    }
+
+    @Override
+    public void notifyObservateurs() {
+        if(observateurs == null) return;
+        for (Observateur observateur : observateurs) observateur.onUpdate();
     }
 }

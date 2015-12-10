@@ -1,6 +1,7 @@
 package views;
 
 import models.Etudiant;
+import models.Promotion;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 /**
  * Created by Marc-Antoine on 01/12/2015.
  */
-public class DptFrame extends JInternalFrame implements Observateur{
+public class DptFrame extends JInternalFrame {
 
     private ArrayList<Etudiant> dataList;
     private DptChart chart;
@@ -31,15 +32,16 @@ public class DptFrame extends JInternalFrame implements Observateur{
         this.pack();
     }
 
-    @Override
-    public void onUpdate() {
-        chart = new DptChart();
+    public void setObservable(Promotion promotion){
+        promotion.addObservateur(chart);
     }
 
 
-    private class DptChart extends JPanel{
+    private class DptChart extends JPanel implements Observateur{
 
         private ArrayList<String> tmp;
+
+        private final ChartPanel chartPanel;
 
         public DptChart(){
 
@@ -48,7 +50,7 @@ public class DptFrame extends JInternalFrame implements Observateur{
             final JFreeChart chart = createChart(dataset, "Répartition Géographique", "No data to display");
 
             // add the chart to a panel...
-            final ChartPanel chartPanel = new ChartPanel(chart);
+            chartPanel = new ChartPanel(chart);
             chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
             this.add(chartPanel);
         }
@@ -95,6 +97,16 @@ public class DptFrame extends JInternalFrame implements Observateur{
             plot.setForegroundAlpha(0.5f);
             plot.setNoDataMessage(noDataMessage);
             return chart;
+        }
+
+        @Override
+        public void onUpdate() {
+
+            final PieDataset dataset = createDataset();
+
+            final JFreeChart chart = createChart(dataset, "Répartition Géographique", "No data to display");
+
+            chartPanel.setChart(chart);
         }
     }
 }
